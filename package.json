@@ -1,0 +1,33 @@
+{
+  "name": "challenge",
+  "version": "1.0.0",
+  "description": "The challenge",
+  "private": true,
+  "scripts": {
+    "build": "nwb build-react-app",
+    "clean": "nwb clean-app",
+    "start": "nwb serve-react-app",
+    "lint": "eslint **/*.js"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.1.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "nwb": "0.12.x"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": ""
+}

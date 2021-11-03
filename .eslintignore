@@ -1,0 +1,8 @@
+/*.*
+
+# IDE specific dirs
+.idea/*
+.vscode/*
+
+# Project setup files
+node_modules/*
