@@ -1,7 +1,7 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {itemsFetchData, getLoadingItems} from "../actions/items";
+import { connect } from "react-redux";
+import { itemsFetchData, getLoadingItems } from "../actions/items";
 
 class ItemList extends Component {
   componentDidMount() {
@@ -9,35 +9,25 @@ class ItemList extends Component {
     this.props.fetchData("http://5af1eee530f9490014ead8c4.mockapi.io/items");
   }
 
-  handleItems(items) {
-    const filteredItems = items.reduce((accFiltereditems, filteredItems) => {
-      const filtered = items.reduce((accAttachment, attachment) => {
-        if (filteredItems.id === attachment.parent_id) {
-          accAttachment.push(attachment);
+  handleItems(items, itemId) {
+    return items.reduce((accFiltereditems, filteredItems) => {
+      if (filteredItems.parent_id === itemId) {
+        const children = this.handleItems(items, filteredItems.id)
+
+        if (children.length) {
+          filteredItems.children = children
         }
-
-        return accAttachment;
-      }, []);
-
-      if (filtered.length) {
-        filteredItems.children = filtered;
-
-        if (filteredItems.parent_id !== 1) {
-          accFiltereditems.push(filteredItems);
-        }
-      } else if (filteredItems.parent_id === 0) {
-        accFiltereditems.push(filteredItems);
+        accFiltereditems.push(filteredItems)
       }
 
-      return accFiltereditems;
-    }, []);
+      return accFiltereditems
+    }, [])
 
-    return filteredItems;
-  }
+  };
 
   render() {
     const copiedItems = JSON.stringify(this.props.items);
-    const result = this.handleItems(JSON.parse(copiedItems));
+    const result = this.handleItems(JSON.parse(copiedItems), 0);
 
     if (this.props.isErrorloading) {
       return (
@@ -49,16 +39,16 @@ class ItemList extends Component {
       <div>
         <div>
           {this.props.isLoading ? (
-                        <span>Loading...</span>
-                    ) : (
-                        <ul>
-                          {this.props.items.map((item) => (
-                            <li key={item.id}>
-                              {item.label}
-                            </li>
-                          ))}
-                        </ul>
-                    )}
+            <span>Loading...</span>
+          ) : (
+            <ul>
+              {this.props.items.map((item) => (
+                <li key={item.id}>
+                  {item.label}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <div>
@@ -68,12 +58,12 @@ class ItemList extends Component {
                 <span>{nestedOne.label}</span>
 
                 <ul>
-                  {(nestedOne.children || []).map((nestedTwo) =>(
+                  {(nestedOne.children || []).map((nestedTwo) => (
                     <li key={nestedTwo.id}>
                       <span>{nestedTwo.label}</span>
 
                       <ul>
-                        {(nestedTwo.children || []).map((nestedThree) =>(
+                        {(nestedTwo.children || []).map((nestedThree) => (
                           <li key={nestedThree.id}>
                             <span>{nestedThree.label}</span>
                           </li>
